@@ -103,4 +103,6 @@ theme: matery
 deploy:
   type: git
   repo: https://github.com/Pengjiahuii/pengjiahuii.github.io.git
-  branch: main  
+  branch: gh-pages
+  token: ${{ secrets.GITHUB_TOKEN }}
+ 
