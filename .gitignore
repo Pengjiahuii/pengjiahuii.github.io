@@ -1,8 +1,31 @@
+# 系统文件
 .DS_Store
 Thumbs.db
-db.json
-*.log
-node_modules/
+
+# Hexo 生成文件
 public/
 .deploy*/
-_multiconfig.yml
+db.json
+
+# Node.js 相关
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Hexo 配置文件缓存
+*.log
+_multiconfig.yml*
+
+# IDE / 编辑器缓存
+.idea/
+.vscode/
+*.swp
+
+# 环境或密钥信息（防止误传）
+.env
+.env.local
+_config*.yml.backup
+
+# 特殊：Twikoo 库文件（防止误检密钥）
+themes/matery/source/libs/twikoo/twikoo.all.min.js
