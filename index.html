@@ -1,181 +1,220 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Travel Checklist — Dubai → Guangzhou → Hanoi → Hong Kong → Chengdu → Dubai</title>
-  <style>
-    :root{--accent:#0b76d1;--muted:#6b7280;--bg:#fbfdff;font-family:Inter,Segoe UI,Helvetica,Arial,sans-serif}
-    body{background:var(--bg);color:#0f172a;margin:0;padding:20px;line-height:1.5}
-    .container{max-width:900px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 6px 20px rgba(11,18,30,0.06);padding:28px}
-    h1{color:var(--accent);margin:0 0 6px;font-size:22px}
-    p.lead{color:var(--muted);margin-top:0}
-    section{margin-top:18px}
-    h2{font-size:16px;margin:8px 0;color:#0b1220}
-    table{width:100%;border-collapse:collapse;margin-top:8px}
-    th,td{padding:8px;border:1px solid #eef2f6;text-align:left}
-    ul{margin:8px 0 0 18px}
-    .pill{display:inline-block;background:#eef7ff;color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;font-size:13px;color:#07324a}
-    @media (max-width:700px){.grid{grid-template-columns:1fr}}
-    .print-hide{display:inline-block;margin-left:12px;color:var(--muted);font-size:13px}
-    footer{margin-top:22px;color:var(--muted);font-size:13px}
-    .summary{background:#f7fbff;border-left:4px solid var(--accent);padding:10px;border-radius:6px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Magical Winter for Zyrille</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Noto+Serif+SC:wght@200;500&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #e5c100; --snow: #ffffff; --bg-dark: #010409; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            height: 100vh; overflow: hidden; background: var(--bg-dark); 
+            display: flex; justify-content: center; align-items: center; 
+            perspective: 2000px; font-family: 'Noto Serif SC', serif; 
+        }
+
+        /* --- 1. 具象化 3D 户外场景背景 --- */
+        .scene { 
+            position: absolute; width: 120%; height: 120%; 
+            transition: transform 0.5s cubic-bezier(0.1, 0, 0.1, 1); 
+            z-index: 1; 
+        }
+        .layer-bg { 
+            position: absolute; width: 100%; height: 100%; 
+            /* 使用高清、挂满发光瓶圣诞树的户外雪景图 */
+            background: url('https://image.pollinations.ai/prompt/Breathtaking%20Christmas%20tree%20in%20deep%20wild%20snow%20at%20night%2C%20hanging%20with%20glowing%20amber%20glass%20bottles%20filled%20with%20stars%2C%20distant%20warm%20cabin%20light%2C%20nebula%20sky%2C%20cinematic%20lighting%2C%208k%20resolution?width=1920&height=1080&seed=999') center/cover;
+            filter: brightness(0.5) contrast(1.1);
+            transform: scale(1.05);
+        }
+
+        /* --- 2. 动态雪花系统 --- */
+        #snow-canvas { position: absolute; z-index: 5; pointer-events: none; mix-blend-mode: lighten; }
+
+        /* --- 3. 电影级字幕美学 --- */
+        .story-container { position: relative; z-index: 100; text-align: center; width: 100%; pointer-events: none; }
+        
+        .main-title { 
+            font-family: 'Cinzel Decorative', cursive; font-size: 5.5rem; color: var(--gold);
+            margin-bottom: 20px; text-shadow: 0 0 40px rgba(229,193,0,0.6);
+            letter-spacing: 18px; animation: titleFloat 4s infinite ease-in-out;
+        }
+
+        .subtitle-box { position: relative; height: 220px; display: flex; justify-content: center; align-items: center; }
+        
+        .phrase { 
+            position: absolute; opacity: 0; transform: translateY(40px) rotateX(-30deg);
+            transition: all 2s cubic-bezier(0.19, 1, 0.22, 1); filter: blur(20px);
+        }
+        
+        .phrase.active { opacity: 1; transform: translateY(0) rotateX(0); filter: blur(0); }
+
+        .zh { font-size: 2.6rem; font-weight: 200; color: #fff; letter-spacing: 12px; margin-bottom: 15px; text-shadow: 0 0 15px rgba(255,255,255,0.4); }
+        .en { font-family: 'Great Vibes', cursive; font-size: 2.2rem; color: var(--gold); letter-spacing: 2px; }
+
+        /* --- 4. 极致入场仪式 --- */
+        .entrance { 
+            position: fixed; inset: 0; background: #000; z-index: 999; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 2.5s cubic-bezier(0.7, 0, 0.3, 1); 
+        }
+        .entrance.hide { opacity: 0; pointer-events: none; transform: scale(1.5); }
+        
+        .play-btn { 
+            width: 120px; height: 120px; border: 1px solid var(--gold); border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            transition: 0.5s; position: relative;
+        }
+        .play-btn svg { fill: var(--gold); width: 50px; height: 50px; margin-left: 8px; }
+        .play-btn::after { content: ''; position: absolute; inset: -15px; border: 1px solid var(--gold); border-radius: 50%; opacity: 0.3; animation: ripple 2s infinite; }
+        .play-btn:hover { background: rgba(229,193,0,0.2); transform: scale(1.1); box-shadow: 0 0 30px var(--gold); }
+
+        @keyframes ripple { from { transform: scale(1); opacity: 0.4; } to { transform: scale(1.6); opacity: 0; } }
+        @keyframes titleFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
+
+        /* 音乐控制旋转碟片 */
+        .m-toggle { 
+            position: fixed; bottom: 40px; right: 40px; z-index: 1000; 
+            width: 50px; height: 50px; border: 1px solid var(--gold); border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center; cursor: pointer; 
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+        }
+        .m-toggle.run { animation: spin 5s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 3.5rem; letter-spacing: 8px; }
+            .zh { font-size: 1.6rem; letter-spacing: 5px; }
+            .en { font-size: 1.4rem; }
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <header>
-      <h1>Travel Checklist — Dubai → Guangzhou → Hanoi → Hong Kong → Chengdu → Dubai</h1>
-      <p class="lead">A practical, actionable checklist for a female solo traveler. Focus: electronics, money, female period care, food safety, transport and safety tips. (Visa matters excluded.)</p>
-    </header>
+<body onclick="tryAutoPlay()">
 
-    <section>
-      <h2>Itinerary (quick view)</h2>
-      <p class="mono">Departure: Dubai (night) → Arrive Guangzhou (07:00) → transfer to Hanoi → Stay in Hanoi until 7th → Fly to Hong Kong (period starts on 8th in Hong Kong) → 12th depart Hong Kong → flight via Chengdu Tianfu → Return to Dubai.</p>
-    </section>
-
-    <section>
-      <h2>1. Plugs, Voltage & Charging</h2>
-      <table>
-        <thead><tr><th>Region</th><th>Plug Type</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td>Dubai</td><td>Type G (UK three-pin)</td><td>220–240V — same as Hong Kong. Bring a UK/Type-G adapter if your plugs differ.</td></tr>
-          <tr><td>China (Guangzhou, Chengdu)</td><td>Type A/I (Chinese standard)</td><td>220V — bring a universal adapter or a China plug adapter.</td></tr>
-          <tr><td>Vietnam (Hanoi)</td><td>Type C/F (European two-pin common)</td><td>220V — many sockets accept multiple pin types. Use a small universal adapter.</td></tr>
-          <tr><td>Hong Kong</td><td>Type G (UK three-pin)</td><td>220–240V — same as Dubai.</td></tr>
-        </tbody>
-      </table>
-      <ul>
-        <li><strong>Must bring:</strong> a <em>universal travel adapter</em> that supports Type G/C/F/A/I.</li>
-        <li>Bring a <strong>multi-port USB power strip</strong> (with surge protection) to charge phone, power bank and other devices at once.</li>
-        <li>Carry extra charging cables and a power bank rated &lt;20000mAh (airline-friendly).</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>2. Mobile Data & Connectivity</h2>
-      <ul>
-        <li>Best option: buy a <strong>multi-country eSIM or physical SIM</strong> covering China, Vietnam and Hong Kong. Confirm it supports hotspot tethering.</li>
-        <li>Alternative: buy a separate local SIM after arrival in Hanoi and top up; airport SIMs are convenient but usually pricier.</li>
-        <li>Save important files offline: hotel addresses, emergency contacts, and digital copies of passport & travel documents.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>3. Money & Cards</h2>
-      <table>
-        <thead><tr><th>Country</th><th>Cash Needed</th><th>Payment Notes</th></tr></thead>
-        <tbody>
-          <tr><td>Vietnam</td><td>Yes — carry local VND (small shops & markets are cash-only)</td><td>ATMs common; bring some cash from home to avoid airport exchange rates.</td></tr>
-          <tr><td>Hong Kong</td><td>Moderate — carry HKD</td><td>Cards widely accepted; get an Octopus card (stored-value) for public transport.</td></tr>
-          <tr><td>China (Guangzhou, Chengdu)</td><td>Some cash + mobile pay</td><td>Alipay/WeChat Pay are widely used — guests can use international cards in some apps or use cash.</td></tr>
-        </tbody>
-      </table>
-      <ul>
-        <li>Bring one international credit/debit card (Visa or MasterCard).</li>
-        <li>Keep cash split across two places (wallet + hotel safe/backpack).</li>
-        <li>Avoid changing large amounts at airports — check local exchange rates before travelling.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>4. Female Period & Health (period starts on 8th while in Hong Kong)</h2>
-      <div class="summary">
-        <strong>Pack in a small personal pouch:</strong> sanitary pads or tampons, panty liners, painkillers (ibuprofen or paracetamol), heating patches/warmers, wet wipes, spare underwear, and a small zip bag for used items.
-      </div>
-      <ul>
-        <li>Bring sufficient sanitary supplies for the whole trip plus extras — Hong Kong & Vietnam sell them, but carrying your preferred brand is more comfortable.</li>
-        <li>Pack a small first-aid kit: painkillers, anti-diarrheal medicine, antacid, motion-sickness tablets and any personal prescriptions.</li>
-        <li>Avoid excessive spicy food and very cold drinks during the first 1–2 days of the period; get rest and stay hydrated.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>5. Food & Drinking Safety</h2>
-      <ul>
-        <li>In Vietnam, avoid ice from unknown sources and raw street-side seafood; prefer bottled water.</li>
-        <li>Use hand sanitizer and wet wipes before eating street food.</li>
-        <li>Carry simple stomach remedies: oral rehydration salts, loperamide, and an antacid.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>6. Transport Tips (free-style travel)</h2>
-      <ul>
-        <li>Use ride apps: <strong>Grab</strong> is recommended in Vietnam; use local apps (Uber/DiDi) where available. For Hong Kong, use MTR + Octopus card.</li>
-        <li>At airports, take official taxis or app-ordered cars; avoid random touts offering rides.</li>
-        <li>Take photos of taxi plates/driver and share live location with a friend when taking late rides.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>7. Safety & Practical Tips</h2>
-      <ul>
-        <li>Keep digital and physical copies of passport, ID, flight tickets, and hotel bookings (one cloud + one offline copy).</li>
-        <li>Split money & cards between your wallet and a hidden pouch/backpack.</li>
-        <li>Be cautious with strangers offering unsolicited help; don’t hand over your phone or passport to anyone except official staff.</li>
-        <li>If something is lost or stolen, contact local police and your embassy/consulate immediately.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>8. Packing Checklist (quick printable)</h2>
-      <div class="grid">
-        <div>
-          <h3>Electronics</h3>
-          <ul>
-            <li>Universal travel adapter</li>
-            <li>Power bank & cables</li>
-            <li>Multi-port USB strip (surge-protected)</li>
-            <li>Plug/charger for laptop (if needed)</li>
-          </ul>
+    <div class="entrance" id="door" onclick="unlock()">
+        <div class="play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </div>
-        <div>
-          <h3>Health & Female Care</h3>
-          <ul>
-            <li>Sanitary pads/tampons + liners</li>
-            <li>Painkillers (ibuprofen/paracetamol)</li>
-            <li>Heating patches / warm bag</li>
-            <li>Basic first-aid and stomach meds</li>
-          </ul>
-        </div>
-      </div>
+        <p style="color: var(--gold); margin-top: 40px; letter-spacing: 6px; font-size: 0.9rem; font-family: 'Cinzel Decorative';">OPEN THE ETERNAL WINTER</p>
+    </div>
 
-      <div class="grid" style="margin-top:10px">
-        <div>
-          <h3>Documents & Money</h3>
-          <ul>
-            <li>Passport copies (cloud & phone)</li>
-            <li>Credit card + local cash (VND, HKD, small RMB)</li>
-            <li>Travel insurance details & emergency contacts</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Clothing & Misc</h3>
-          <ul>
-            <li>Thin jacket / light layers (Hong Kong & Chengdu can be cooler)</li>
-            <li>Comfortable shoes; sandals for Hanoi</li>
-            <li>Umbrella / rain jacket</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+    <div class="scene" id="scene">
+        <div class="layer-bg"></div>
+    </div>
 
-    <section>
-      <h2>9. Emergency & Useful Contacts</h2>
-      <ul>
-        <li>Save local emergency numbers and the contact details of your embassy/consulate.</li>
-        <li>Make a note of the hotel addresses in local language to show to taxi drivers.</li>
-        <li>Share your itinerary with a trusted friend and enable location-sharing on your phone while travelling.</li>
-      </ul>
-    </section>
+    <canvas id="snow-canvas"></canvas>
 
-    <footer>
-      <p>Quick summary: <span class="pill">Universal adapter</span> <span class="pill">Multi-country SIM</span> <span class="pill">Vietnam cash</span> <span class="pill">Period supplies</span>
-      <span class="print-hide">(Printable version: use browser Print → Save as PDF)</span></p>
-    </footer>
-  </div>
+    <div class="story-container">
+        <h1 class="main-title">ZYRILLE</h1>
+        <div class="subtitle-box" id="box">
+            <div class="phrase active">
+                <div class="zh">愿你的圣诞节像此刻的星空一样璀璨</div>
+                <div class="en">May your Christmas be as bright as the stars</div>
+            </div>
+            <div class="phrase">
+                <div class="zh">万千星辉，皆是你眼底的倒影</div>
+                <div class="en">Stars are but reflections in your eyes</div>
+            </div>
+            <div class="phrase">
+                <div class="zh">树上的发光瓶，盛满了冬日的永恒</div>
+                <div class="en">Glowing bottles holding eternity on the tree</div>
+            </div>
+            <div class="phrase">
+                <div class="zh">愿余生的冬日，你都被温暖包围</div>
+                <div class="en">May every winter find you in warmth</div>
+            </div>
+            <div class="phrase">
+                <div class="zh">圣诞快乐，亲爱的 Zyrille</div>
+                <div class="en">Merry Christmas, My Dearest Zyrille</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-toggle" id="mIcon" onclick="controlMusic(event)">
+        <svg width="24" height="24" fill="var(--gold)" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+    </div>
+
+    <audio id="bgm" loop src="LXY.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById('bgm');
+        const phrases = document.querySelectorAll('.phrase');
+        let idx = 0;
+        let hasUnlocked = false;
+
+        function unlock() {
+            if(hasUnlocked) return;
+            hasUnlocked = true;
+            document.getElementById('door').classList.add('hide');
+            audio.play().catch(e => console.log("Play blocked"));
+            document.getElementById('mIcon').classList.add('run');
+            
+            // 启动字幕轮播
+            setInterval(next, 5000);
+            initSnow();
+            draw();
+        }
+
+        function next() {
+            phrases[idx].classList.remove('active');
+            idx = (idx + 1) % phrases.length;
+            phrases[idx].classList.add('active');
+        }
+
+        function controlMusic(e) {
+            e.stopPropagation();
+            if(audio.paused) { 
+                audio.play(); 
+                document.getElementById('mIcon').classList.add('run'); 
+            } else { 
+                audio.pause(); 
+                document.getElementById('mIcon').classList.remove('run'); 
+            }
+        }
+
+        // 视角跟随机械感 (3D视差)
+        document.addEventListener('mousemove', (e) => {
+            if(!hasUnlocked) return;
+            const rx = (window.innerHeight/2 - e.pageY) / 45;
+            const ry = (window.innerWidth/2 - e.pageX) / 45;
+            document.getElementById('scene').style.transform = `rotateX(${rx}deg) rotateY(${-ry}deg)`;
+        });
+
+        // 动态落雪系统
+        const cvs = document.getElementById('snow-canvas');
+        const ctx = cvs.getContext('2d');
+        let w, h, snow = [];
+
+        function initSnow() {
+            w = cvs.width = window.innerWidth;
+            h = cvs.height = window.innerHeight;
+            snow = [];
+            for(let i=0; i<180; i++) {
+                snow.push({
+                    x: Math.random()*w, 
+                    y: Math.random()*h, 
+                    r: Math.random()*3+1, 
+                    s: Math.random()*0.5+0.3, 
+                    o: Math.random()*0.6+0.2
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            snow.forEach(p => {
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255, 255, 255, ${p.o})`;
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+                ctx.fill();
+                p.y += p.s;
+                p.x += Math.sin(p.y/50)*0.5;
+                if(p.y > h) p.y = -10;
+            });
+            requestAnimationFrame(draw);
+        }
+
+        window.onresize = initSnow;
+    </script>
 </body>
 </html>
